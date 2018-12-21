@@ -8,11 +8,70 @@ namespace ChineseChess
 
     public class MainBox//棋盘
     {
-        public int[,] box = new int[19, 23];
-
         public void PrintMainBox()
         {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            for (int i = 2; i < 59;i+=1)
+            {
+                for (int j = 1; j < 32;j+=3)
+                {
+                    Console.SetCursorPosition(i, j);
+                    Console.Write("━");
+                }
+            }
 
+            for (int i = 2; i < 59; i += 7)
+            {
+                for (int j = 1; j < 32;j++)
+                {
+                    Console.SetCursorPosition(i, j);
+
+                    if((i+5)%7==0&&(j+2)%3==0)
+                    {
+                        if(i==2&&j==1)
+                        {
+                            Console.Write("┏");
+                        }
+                        else if(i==58&&j==1)
+                        {
+                            Console.Write("┓");
+                        }
+                        else if(i==58&&j==31)
+                        {
+                            Console.Write("┛");
+                        }
+                        else if(i==2&&j==31)
+                        {
+                            Console.Write("┗");
+                        }
+                        else if(j==1)
+                        {
+                            Console.Write("┳");
+                        }
+                        else if(j==31)
+                        {
+                            Console.Write("┻");
+                        }
+                        else if(i==58)
+                        {
+                            Console.Write("┫");
+                        }
+                        else if(i==2)
+                        {
+                            Console.Write("┣");
+                        }
+                        else
+                            Console.Write("╋");
+                    }
+                    else
+                    {
+                        Console.Write("┃");
+                    }
+
+
+
+                }
+            }
         }
     }
 
@@ -28,8 +87,8 @@ namespace ChineseChess
         private bool ischosed;
         public Pos()//构造
         {
-            pos_x = 20;
-            pos_y = 20;
+            pos_x = 0;
+            pos_y = 0;
             ischosed = false;
         }
 
