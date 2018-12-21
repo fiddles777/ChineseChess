@@ -31,5 +31,10 @@ namespace ChineseChess
             //}
             return true;
         }
+        public void ChessMove(Position position)
+        {
+            chesspos.x = position.x;
+            chesspos.y = position.y;
+        }
     }
 }

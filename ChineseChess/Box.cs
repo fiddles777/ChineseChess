@@ -4,19 +4,19 @@ namespace ChineseChess
 {
     public class ChessBox//棋子
     {
-        private static List<Chess> ChessList = new List<Chess>();
-        public void a()
-        {
-            Console.Write(ChessList.Count);
-        }
+        public int ChosedIndex;
+        static List<Chess> ChessList = new List<Chess>();
 
         public int AddChess(string _type, string _owner, Position initialpos)//添加棋子
         {
+            initialpos.BoxToConsole();
+            Console.Write(initialpos.x);
+            Console.Write(initialpos.y);
             ChessList.Add(new Chess(_type, _owner, initialpos, ChessList.Count));
             return ChessList.Count;
         }
 
-        public int GetCountChess(Position startpos,Position endpos,string _owner)//不考虑startpos处的棋子，考虑endpos处的棋子，获得路径上的棋子数量
+        public int GetCountChess(Position startpos,Position endpos,string _owner)//不考虑startpos处的棋子，不考虑endpos处的棋子，获得路径上的棋子数量
         {
             int count = 0;
             if(startpos.x == endpos.x)
@@ -58,16 +58,75 @@ namespace ChineseChess
             ChessList[_index].exist = false;
         }
 
-        public int FindChess(Position _position)
+        public int FindChess(Position _position,string _owner)//查找棋子
         {
-            for (int i = 0; i <= ChessList.Count;i++)
+            for (int i = 0; i < ChessList.Count;i++)
             {
                 if (ChessList[i].exist == false)
                     continue;
-                else if (ChessList[i].chesspos.x == _position.x && ChessList[i].chesspos.y == _position.y)
+                else if (ChessList[i].chesspos.x == _position.x && ChessList[i].chesspos.y == _position.y && ChessList[i].owner == _owner)
                     return i;
             }
             return -1;
+        }
+
+        public void ChessMove(int _index,Position position)
+        {
+            ChessList[_index].ChessMove(position);
+        }
+
+        public void ChessPlot()//绘制所有棋子
+        {
+            for (int i = 0; i < ChessList.Count;i++)
+            {
+                if (ChessList[i].exist == false)
+                    continue;
+                if (ChessList[i].owner == "RED")
+                    Console.ForegroundColor = ConsoleColor.Red;
+                else if (ChessList[i].owner == "BLACK")
+                    Console.ForegroundColor = ConsoleColor.Green;
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 0, ChessList[i].chesspos.y + 0);
+                Console.Write("┏");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 1, ChessList[i].chesspos.y + 0);
+                Console.Write("━");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 2, ChessList[i].chesspos.y + 0);
+                Console.Write("━");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 3, ChessList[i].chesspos.y + 0);
+                Console.Write("━");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 4, ChessList[i].chesspos.y + 0);
+                Console.Write("┓");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 0, ChessList[i].chesspos.y + 1);
+                Console.Write("┃");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 4, ChessList[i].chesspos.y + 1);
+                Console.Write("┃");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 0, ChessList[i].chesspos.y + 2);
+                Console.Write("┗");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 4, ChessList[i].chesspos.y + 2);
+                Console.Write("┛");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 1, ChessList[i].chesspos.y + 2);
+                Console.Write("━");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 2, ChessList[i].chesspos.y + 2);
+                Console.Write("━");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 3, ChessList[i].chesspos.y + 2);
+                Console.Write("━");
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 1, ChessList[i].chesspos.y + 1);
+                Console.Write(" " + ChessList[i].type);
+            }
+        }
+
+        public void PlotChessWord()
+        {
+            for (int i = 0; i < ChessList.Count; i++)
+            {
+                if (ChessList[i].exist == false)
+                    continue;
+                if (ChessList[i].owner == "RED")
+                    Console.ForegroundColor = ConsoleColor.Red;
+                else if (ChessList[i].owner == "BLACK")
+                    Console.ForegroundColor = ConsoleColor.Green;
+                Console.SetCursorPosition(ChessList[i].chesspos.x + 1, ChessList[i].chesspos.y + 1);
+                Console.Write(" " + ChessList[i].type);
+            }
         }
     }
 
@@ -162,9 +221,9 @@ namespace ChineseChess
 
     public class Pos //选择框
     {
-        private Position currentpos;
-        private Position chosedpos;
-        private bool ischosed;
+        public Position currentpos;
+        public Position chosedpos;
+        public bool ischosed;
 
         public Pos()//构造
         {
@@ -201,7 +260,7 @@ namespace ChineseChess
 
         public void PosPlot()//选中框绘图
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.CursorVisible = false;
             Console.SetCursorPosition(currentpos.x + 0, currentpos.y + 0);
             Console.Write("┏");
@@ -234,7 +293,7 @@ namespace ChineseChess
             if (ischosed == false)
                 return;
             Console.Write("↖");
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.CursorVisible = false;
             Console.SetCursorPosition(chosedpos.x + 0, chosedpos.y + 0);
             Console.Write("┏");
@@ -262,11 +321,11 @@ namespace ChineseChess
             Console.Write("━");
         }
 
-        public void ChosedPosDoublePlot()//选中框绘图
+        public void ChosedPosDoublePlot()//选中框绘图双线
         {
             if (ischosed == false)
                 return;
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.CursorVisible = false;
             Console.SetCursorPosition(chosedpos.x + 0, chosedpos.y + 0);
             Console.Write("╔");
@@ -292,12 +351,6 @@ namespace ChineseChess
             Console.Write("═");
             Console.SetCursorPosition(chosedpos.x + 3, chosedpos.y + 2);
             Console.Write("═");
-        }
-
-        public void PosGet(ref Position position)//获得当前位置
-        {
-
-            return;
         }
 
         public void ChosePos()//选择框选中
