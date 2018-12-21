@@ -8,6 +8,7 @@ namespace ChineseChess
         public static void Main(string[] args)
         {
             Pos pos = new Pos();
+            MainBox mainBox = new MainBox();
             pos.PosPlot();
             while(true)
             {
@@ -34,8 +35,12 @@ namespace ChineseChess
                     pos.PosMove(4);
                 }
                 Console.Clear();
-                pos.ChosedPosPlot();
+                mainBox.PrintMainBox();
                 pos.PosPlot();
+                pos.ChosedPosPlot();
+
+
+
             }
         }
     }

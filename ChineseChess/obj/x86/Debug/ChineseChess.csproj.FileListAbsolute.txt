@@ -4,3 +4,9 @@
 /Users/st2r/Desktop/ChineseChess/ChineseChess/obj/x86/Debug/ChineseChess.csproj.CoreCompileInputs.cache
 /Users/st2r/Desktop/ChineseChess/ChineseChess/obj/x86/Debug/ChineseChess.exe
 /Users/st2r/Desktop/ChineseChess/ChineseChess/obj/x86/Debug/ChineseChess.pdb
+/Users/st2r/Documents/GitHub/ChineseChess/ChineseChess/bin/Debug/ChineseChess.exe
+/Users/st2r/Documents/GitHub/ChineseChess/ChineseChess/bin/Debug/ChineseChess.pdb
+/Users/st2r/Documents/GitHub/ChineseChess/ChineseChess/obj/x86/Debug/ChineseChess.csprojResolveAssemblyReference.cache
+/Users/st2r/Documents/GitHub/ChineseChess/ChineseChess/obj/x86/Debug/ChineseChess.csproj.CoreCompileInputs.cache
+/Users/st2r/Documents/GitHub/ChineseChess/ChineseChess/obj/x86/Debug/ChineseChess.exe
+/Users/st2r/Documents/GitHub/ChineseChess/ChineseChess/obj/x86/Debug/ChineseChess.pdb
