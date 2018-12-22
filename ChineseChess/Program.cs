@@ -14,6 +14,7 @@ namespace ChineseChess
             Pos pos = new Pos();
             MainBox mainBox = new MainBox();
             ChessBox chessBox = new ChessBox();
+            ChessBox chessBoxtest = new ChessBox();
             Position position = new Position(10, 10);
             position.BoxToConsole();
             Console.Write(position.x);
@@ -52,7 +53,6 @@ namespace ChineseChess
             chessBox.AddChess("卒", "BLACK", new Position(4, 6));
             chessBox.AddChess("卒", "BLACK", new Position(6, 6));
             chessBox.AddChess("卒", "BLACK", new Position(8, 6));
-
             while (GameOrder=="RED"||GameOrder=="BLACK"||GameOrder=="REDCHOSE"||GameOrder=="BLACKCHOSE")
             {
                 ConsoleKeyInfo consolekeyinfo = Console.ReadKey(true);
@@ -61,7 +61,7 @@ namespace ChineseChess
                     if(chessBox.FindChess(pos.currentpos,GameOrder)>=0)
                     {
                         pos.ChosePos();
-                        chessBox.ChosedIndex = chessBox.FindChess(pos.currentpos, GameOrder);
+                        chessBox.GetChosedIndex(chessBox.FindChess(pos.currentpos, GameOrder));
                         GameOrder = GameOrder + "CHOSE";
                     }
                 }
@@ -70,30 +70,46 @@ namespace ChineseChess
                     if(pos.currentpos.x==pos.chosedpos.x && pos.currentpos.y==pos.chosedpos.y)
                     {
                         pos.ischosed = false;
-                    }
-                    else if(pos.currentpos.IsConsoleValid() == true)
-                    {
-                        if(GameOrder == "REDCHOSE")
-                        {
-                            if(chessBox.FindChess(pos.currentpos,"BLACK")>-1)
-                            {
-                                chessBox.DelChess(chessBox.FindChess(pos.currentpos, "BLACK"));
-                            }
-                        }
-                        else
-                        {
-                            if (chessBox.FindChess(pos.currentpos, "RED") > -1)
-                            {
-                                chessBox.DelChess(chessBox.FindChess(pos.currentpos, "RED"));
-                            }
-                        }
-
-                        pos.ischosed = false;
-                        chessBox.ChessMove(chessBox.ChosedIndex, pos.currentpos);
-                        if (GameOrder == "REDCHOSE")
+                        if (GameOrder == "BLACKCHOSE")
                             GameOrder = "BLACK";
                         else
                             GameOrder = "RED";
+                    }
+                    else if(pos.currentpos.IsConsoleValid() == true)//todo
+                    {
+                        if(chessBox.AbleToMove(pos.currentpos))
+                        {
+                            if (GameOrder == "REDCHOSE")
+                            {
+                                if (chessBox.FindChess(pos.currentpos, "BLACK") > -1 || chessBox.FindChess(pos.currentpos, "RED")<0)
+                                {
+                                    if (chessBox.FindChess(pos.currentpos, "BLACK") > -1)
+                                        chessBox.DelChess(chessBox.FindChess(pos.currentpos, "BLACK"));
+                                    pos.ischosed = false;
+                                    chessBox.ChessMove(chessBox.GetChosedIndex(), pos.currentpos);
+
+                                    if (GameOrder == "REDCHOSE")
+                                        GameOrder = "BLACK";
+                                    else
+                                        GameOrder = "RED";
+                                }
+                            }
+                            else
+                            {
+                                if (chessBox.FindChess(pos.currentpos, "RED") > -1 || chessBox.FindChess(pos.currentpos, "BLACK")<0)
+                                {
+                                    if(chessBox.FindChess(pos.currentpos, "RED") > -1)
+                                        chessBox.DelChess(chessBox.FindChess(pos.currentpos, "RED"));
+                                    pos.ischosed = false;
+                                    chessBox.ChessMove(chessBox.GetChosedIndex(), pos.currentpos);
+
+                                    if (GameOrder == "REDCHOSE")
+                                        GameOrder = "BLACK";
+                                    else
+                                        GameOrder = "RED";
+                                }
+                            }
+                        }
                     }
                 }
                 else if (consolekeyinfo.Key == ConsoleKey.LeftArrow)

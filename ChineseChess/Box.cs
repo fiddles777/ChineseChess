@@ -4,9 +4,18 @@ namespace ChineseChess
 {
     public class ChessBox//棋子
     {
-        public int ChosedIndex;
-        static List<Chess> ChessList = new List<Chess>();
+        static int ChosedIndex;
+        static  List<Chess> ChessList = new List<Chess>();
 
+        public int GetChosedIndex()
+        {
+            return ChosedIndex;
+        }
+        public int GetChosedIndex(int _index)
+        {
+            ChosedIndex = _index;
+            return ChosedIndex;
+        }
         public int AddChess(string _type, string _owner, Position initialpos)//添加棋子
         {
             initialpos.BoxToConsole();
@@ -21,7 +30,7 @@ namespace ChineseChess
             int count = 0;
             if(startpos.x == endpos.x)
             {
-                for (int i = 0; i <= ChessList.Count;i++)
+                for (int i = 0; i < ChessList.Count;i++)
                 {
                     if (ChessList[i].exist == false)
                         continue;
@@ -36,7 +45,7 @@ namespace ChineseChess
             }
             else if (startpos.y == endpos.y)
             {
-                for (int i = 0; i <= ChessList.Count; i++)
+                for (int i = 0; i < ChessList.Count; i++)
                 {
                     if (ChessList[i].exist == false)
                         continue;
@@ -73,6 +82,11 @@ namespace ChineseChess
         public void ChessMove(int _index,Position position)
         {
             ChessList[_index].ChessMove(position);
+        }
+
+        public bool AbleToMove(Position endpos)
+        {
+            return ChessList[ChosedIndex].AbleToMove(endpos);
         }
 
         public void ChessPlot()//绘制所有棋子
@@ -251,7 +265,7 @@ namespace ChineseChess
                         currentpos.y -= 1;
                     break;
                 case 4:
-                    if (currentpos.y < 25)
+                    if (currentpos.y < 27)
                         currentpos.y += 1;
                     break;
             }
