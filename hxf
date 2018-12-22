@@ -1,0 +1,85 @@
+using System;
+namespace ChineseChess
+{
+    public class Chess
+    {
+        public Position chesspos; //棋子所在位置
+        public bool exist; //棋子是否存在
+        public string type; //棋子的种类
+        public string owner; //红黑持有者
+        public int index; //每个棋子的索引号
+        public Chess(string _type,string _owner,Position initialpos,int _index)//构造
+        {
+            chesspos.x = initialpos.x;
+            chesspos.y = initialpos.y;
+            type = _type;
+            owner = _owner;
+            exist = true;
+            index = _index;
+        }
+
+        public bool AbleToMove(Position endpos)//beginpos = chesspos
+        {
+            Chess selected = getChess(index);//所选的棋子
+            switch(type)
+            {
+                case "帅":{
+                	AbleToMoveShuai(index, killid, x, y);    
+				}
+                
+            }
+            return true;
+        }
+        public bool AbleToMoveShuai(index, killid, x, y){
+            Chess killed = getChess(killid);//所选的棋子
+            //1、一次走一格
+            //2、不能出九宫格
+            //撞脸杀
+            if(killed.type == "帅")
+            {
+                return canMoveChe(index, x, y);
+            }
+            //通过棋子的ID得到棋子
+            Chess selected = getChess(index);
+            //获得将当前的位置
+            int currentx = selected.chesspos.x;
+            int currenty = selected.chesspos.y;
+            //获得将走的格数
+            //(x,y)表示将走到的位置
+            int xoff = abs(currentx - x); //abs()函数
+            int yoff = abs(currenty - y);
+            int d = xoff*10 + yoff;
+            //有四种情况
+            //xoff=1, yoff=0：将向左或向右
+            //xoff=0, yoff=1：将向前或向后
+            if(d != 1 && d != 10)
+            {
+                return false;
+            }
+            //判断将是否出了九宫
+            //红色的将和黑色的将的x坐标的范围都是3<=x<=5
+            if(x<3 || x>5)
+            {
+                return false;
+            }
+            //如果玩家的棋子是红棋
+            if(_redSide == selected.owner)
+            {
+                //判断帅是否出了九宫
+                if(y<0 || y>2)
+                {
+                    return false;
+                }
+            }
+            else//判断黑色的将的范围
+            {
+                //判断将是否出了九宫
+                if(y>9 || y<7)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+}
